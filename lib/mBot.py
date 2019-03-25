@@ -128,11 +128,12 @@ class mBot():
 		
 	def start(self):
 		sys.excepthook = self.excepthook
-		th = threading.Thread(target=self.__onRead,args=(self.onParse,))
-		th.start()
+		self.th = threading.Thread(target=self.__onRead,args=(self.onParse,))
+		self.th.start()
 		
 	def close(self):
-		self.device.close()
+	        self.exiting=True	
+                self.device.close()
 		
 	def exit(self, signal, frame):
 		self.exiting = True

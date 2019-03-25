@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
 import os
+import sys
 import time
-
+import traceback
 import threading
 
 # Import CNN library
@@ -182,10 +183,6 @@ def bkgrndSubMask(frame, x0, y0, width, height, framecount, plot):
 def Main():
     global guessGesture, visualize, mod, binaryMode, bkgrndSubMode, mask, takebkgrndSubMask, x0, y0, width, height, saveImg, gestname, path
 
-    # Instantiate an mBot device
-    bot = mBot.mBot()
-    bot.startWithSerial("/dev/ttyUSB0")
-
     quietMode = False
     
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -224,6 +221,10 @@ def Main():
         else:
             print("Get out of here!!!")
             return 0
+
+    # Instantiate an mBot device
+    bot = mBot.mBot()
+    bot.startWithSerial("/dev/ttyUSB0")
 
     ## Grab camera input
     cap = cv2.VideoCapture(0)
@@ -290,7 +291,17 @@ def Main():
 
                 if guess_data:
                     guess = max(guess_data.iterkeys(), key=(lambda key: guess_data[key]))
-                    print("Guess: {}".format(guess))
+                    # print("Guess: {}".format(guess))
+
+                    if guess == 'STOP':
+                        bot.doRGBLedOnBoard(0,100,0,0)
+                        bot.doRGBLedOnBoard(1,100,0,0)
+                    elif guess == 'OK':
+                        bot.doRGBLedOnBoard(0,0,100,0)
+                        bot.doRGBLedOnBoard(1,0,100,0)
+                    else:
+                        bot.doRGBLedOnBoard(0,100,100,100)
+                        bot.doRGBLedOnBoard(1,100,100,100)
 
             cv2.imshow('Gesture Probability',plot)
 
@@ -364,6 +375,10 @@ def Main():
     #Release & destroy
     cap.release()
     cv2.destroyAllWindows()
+
+    bot.close()
+
+    return()
 
 if __name__ == "__main__":
     Main()
