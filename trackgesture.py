@@ -5,8 +5,11 @@ import time
 
 import threading
 
+# Import CNN library
 import gestureCNN as myNN
 
+# Import mBot library
+from lib import mBot
 
 # Global variables
 minValue = 70
@@ -178,6 +181,10 @@ def bkgrndSubMask(frame, x0, y0, width, height, framecount, plot):
 
 def Main():
     global guessGesture, visualize, mod, binaryMode, bkgrndSubMode, mask, takebkgrndSubMask, x0, y0, width, height, saveImg, gestname, path
+
+    # Instantiate an mBot device
+    bot = mBot.mBot()
+    bot.startWithSerial("/dev/ttyUSB0")
 
     quietMode = False
     
