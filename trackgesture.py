@@ -286,22 +286,62 @@ def Main():
            
                 # grab guess info
                 guess_data = myNN.getCurrentGuess()
-
-                print(guess_data)
+                # print(guess_data)
 
                 if guess_data:
                     guess = max(guess_data.iterkeys(), key=(lambda key: guess_data[key]))
-                    # print("Guess: {}".format(guess))
+                    print("Guess: {}".format(guess))
 
                     if guess == 'STOP':
                         bot.doRGBLedOnBoard(0,100,0,0)
                         bot.doRGBLedOnBoard(1,100,0,0)
+
+                        # C3
+                        bot.doBuzzer(131,500)
+
+                        # try:
+                        #     bot.doMove(-100,-100)
+                        #     time.sleep(0.1)
+                        #     bot.doMove(0,0)
+
+                        # except Exception,ex:
+                        #     print str(ex)
+
                     elif guess == 'OK':
                         bot.doRGBLedOnBoard(0,0,100,0)
                         bot.doRGBLedOnBoard(1,0,100,0)
+
+                        # E3
+                        bot.doBuzzer(165,500)
+  
+                        # try:
+                        #     bot.doMove(100,100)
+                        #     time.sleep(0.1)
+                        #     bot.doMove(0,0)
+
+                        # except Exception,ex:
+                        #     print str(ex)
+
+                    elif guess == 'PUNCH':
+                        bot.doRGBLedOnBoard(0,0,0,100)
+                        bot.doRGBLedOnBoard(1,0,0,100)
+                        
+                        # G3
+                        bot.doBuzzer(196,500)
+
+                        # try:
+                        #     bot.doMove(-100,100)
+                        #     time.sleep(0.1)
+                        #     bot.doMove(0,0)
+
+                        # except Exception,ex:
+                        #     print str(ex)
+                            
                     else:
                         bot.doRGBLedOnBoard(0,100,100,100)
                         bot.doRGBLedOnBoard(1,100,100,100)
+
+                        bot.doBuzzer(0)
 
             cv2.imshow('Gesture Probability',plot)
 
