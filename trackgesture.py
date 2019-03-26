@@ -307,6 +307,22 @@ def Main():
                         # except Exception,ex:
                         #     print str(ex)
 
+                    elif guess == 'PEACE':
+                        bot.doRGBLedOnBoard(0,100,100,0)
+                        bot.doRGBLedOnBoard(1,100,100,0)
+
+                        # E3
+                        bot.doBuzzer(145,500)
+  
+                        # try:
+                        #     bot.doMove(100,-100)
+                        #     time.sleep(0.1)
+                        #     bot.doMove(0,0)
+
+                        # except Exception,ex:
+                        #     print str(ex)
+
+
                     elif guess == 'OK':
                         bot.doRGBLedOnBoard(0,0,100,0)
                         bot.doRGBLedOnBoard(1,0,100,0)
